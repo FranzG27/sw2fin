@@ -42,10 +42,11 @@
         <div class="row mb-3">
             <label for="inputPhoto" class="col-sm-2 col-form-label">Foto de su rostro</label>
             <div class="col-sm-10">
-                <video id="videoElement" style="max-width: 100%;" autoplay></video>
+                <video id="videoElement" style="max-width: 100%;"></video>
                 <input type="hidden" id="photo-data" name="photo_data">
                 <canvas id="photo-preview" style="display: none;"></canvas>
-                <button type="button" class="btn btn-primary" onclick="capturePhoto()">Capturar</button>
+                <button type="button" class="btn btn-primary" onclick="startVideo()">Iniciar Video</button>
+                <button type="button" class="btn btn-primary" onclick="capturePhoto()" disabled>Capturar</button>
             </div>
         </div>
 
@@ -67,6 +68,7 @@
     <script>
         // Get media devices
         const videoElement = document.getElementById('videoElement');
+        const captureButton = document.querySelector('button[onclick="capturePhoto()"]');
 
         // Check if it's a mobile device
         const isMobile = /Android|iPhone|iPad|iPod|Windows Phone/i.test(navigator.userAgent);
@@ -75,6 +77,7 @@
         if (isMobile) {
             videoElement.addEventListener('click', function() {
                 videoElement.play();
+                captureButton.disabled = false;
             });
         }
 
@@ -84,6 +87,7 @@
                 .then(function (stream) {
                     videoElement.srcObject = stream;
                     videoElement.play();
+                    captureButton.disabled = false;
                 })
                 .catch(function (error) {
                     console.error('Error accessing media devices', error);
