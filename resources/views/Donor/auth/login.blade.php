@@ -42,11 +42,12 @@
         <div class="row mb-3">
             <label for="inputPhoto" class="col-sm-2 col-form-label">Foto de su rostro</label>
             <div class="col-sm-10">
+                
                 <video id="videoElement" style="max-width: 100%;"></video>
                 <input type="hidden" id="photo-data" name="photo_data">
-                <canvas id="photo-preview" style="display: none;"></canvas>
-                <button type="button" class="btn btn-primary" onclick="startVideo()">Iniciar Video</button>
-                <button type="button" class="btn btn-primary" onclick="capturePhoto()" disabled>Capturar</button>
+                    <canvas id="photo-preview" style="display: none;"></canvas>
+                
+                    <button type="button" class="btn btn-primary" onclick="capturePhoto('inputPhoto', 'photo-data', 'photo-preview')">Capturar</button>
             </div>
         </div>
 
@@ -67,35 +68,19 @@
 
     <script>
         // Get media devices
-        const videoElement = document.getElementById('videoElement');
-        const captureButton = document.querySelector('button[onclick="capturePhoto()"]');
-
-        // Check if it's a mobile device
-        const isMobile = /Android|iPhone|iPad|iPod|Windows Phone/i.test(navigator.userAgent);
-
-        // Add an event listener to start video playback on interaction for mobile devices
-        if (isMobile) {
-            videoElement.addEventListener('click', function() {
+        navigator.mediaDevices.getUserMedia({ video: true })
+            .then(function (stream) {
+                const videoElement = document.getElementById('videoElement');
+                videoElement.srcObject = stream;
                 videoElement.play();
-                captureButton.disabled = false;
+            })
+            .catch(function (error) {
+                console.error('Error accessing media devices', error);
             });
-        }
-
-        // Otherwise, start video playback immediately for non-mobile devices
-        else {
-            navigator.mediaDevices.getUserMedia({ video: true })
-                .then(function (stream) {
-                    videoElement.srcObject = stream;
-                    videoElement.play();
-                    captureButton.disabled = false;
-                })
-                .catch(function (error) {
-                    console.error('Error accessing media devices', error);
-                });
-        }
 
         // Add an event listener to the capture button
         function capturePhoto() {
+            const videoElement = document.getElementById('videoElement');
             const canvas = document.getElementById('photo-preview');
             const dataInput = document.getElementById('photo-data');
             const capturedPhoto = document.getElementById('captured-photo');
@@ -114,6 +99,8 @@
             // Store the image data in the hidden input field
             dataInput.value = imageData;
 
+            // Show the canvas with the captured photo
+            //canvas.style.display = 'block';
             // Show the captured photo below the live video
             capturedPhoto.src = imageData;
             capturedPhoto.style.display = 'block';
