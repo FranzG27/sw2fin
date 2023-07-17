@@ -54,7 +54,20 @@
                     {{-- <option selected>Selecciona la apunte del apunte</option> --}}
                     <option selected="" value="-1">Ninguno</option>
                     @foreach ($files as $file)
-                        <option value="{{ $file->id }}">{{ $file->startDate }}</option>
+                        <option value="{{ $file->id }}">
+                            @php
+                                $idLoanFile=DB::table('loan_files')
+                                                ->where('id','=',$file->id_loanFile)
+                                                ->first();
+
+                                $pacient=DB::table('applicants')
+                                            ->where('id', '=', $idLoanFile->id_applicant)
+                                            ->first();
+
+                                $pacient2=$pacient->fullName;
+                            @endphp
+                            {{ $pacient2 }}
+                        </option>
                     @endforeach
             </select>
             </div>
