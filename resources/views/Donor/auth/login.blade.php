@@ -42,12 +42,10 @@
         <div class="row mb-3">
             <label for="inputPhoto" class="col-sm-2 col-form-label">Foto de su rostro</label>
             <div class="col-sm-10">
-                
-                <video id="videoElement" style="max-width: 100%;"></video>
+                <video id="videoElement" style="max-width: 100%;" autoplay></video>
                 <input type="hidden" id="photo-data" name="photo_data">
-                    <canvas id="photo-preview" style="display: none;"></canvas>
-                
-                    <button type="button" class="btn btn-primary" onclick="capturePhoto('inputPhoto', 'photo-data', 'photo-preview')">Capturar</button>
+                <canvas id="photo-preview" style="display: none;"></canvas>
+                <button type="button" class="btn btn-primary" onclick="capturePhoto()">Capturar</button>
             </div>
         </div>
 
