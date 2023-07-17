@@ -16,7 +16,7 @@ class BloodInventoryController extends Controller
 
    public function indexInventoryView(){
         $inventories=BloodInventory::all();
-        return view('Users.gestionar_inventario.index',compact('inventories'));
+        return view('Users.gestionar_Inventario.index',compact('inventories'));
    }
 
 
@@ -26,7 +26,7 @@ class BloodInventoryController extends Controller
         $types=BloodType::all();
 
         if($usuario->isAdmin==true){
-            return view('Users.gestionar_inventario.create',compact('types'));
+            return view('Users.gestionar_Inventario.create',compact('types'));
         }
         return view('Users.error');
     }
@@ -50,7 +50,7 @@ class BloodInventoryController extends Controller
         $types=BloodType::all();
 
         if($usuario->isAdmin==true){
-            return view('Users.gestionar_inventario.edit',compact('inventory','types'));
+            return view('Users.gestionar_Inventario.edit',compact('inventory','types'));
         }
 
         return view('Users.error');
