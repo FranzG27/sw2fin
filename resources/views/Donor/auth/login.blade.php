@@ -66,19 +66,32 @@
 
     <script>
         // Get media devices
-        navigator.mediaDevices.getUserMedia({ video: true })
-            .then(function (stream) {
-                const videoElement = document.getElementById('videoElement');
-                videoElement.srcObject = stream;
+        const videoElement = document.getElementById('videoElement');
+
+        // Check if it's a mobile device
+        const isMobile = /Android|iPhone|iPad|iPod|Windows Phone/i.test(navigator.userAgent);
+
+        // Add an event listener to start video playback on interaction for mobile devices
+        if (isMobile) {
+            videoElement.addEventListener('click', function() {
                 videoElement.play();
-            })
-            .catch(function (error) {
-                console.error('Error accessing media devices', error);
             });
+        }
+
+        // Otherwise, start video playback immediately for non-mobile devices
+        else {
+            navigator.mediaDevices.getUserMedia({ video: true })
+                .then(function (stream) {
+                    videoElement.srcObject = stream;
+                    videoElement.play();
+                })
+                .catch(function (error) {
+                    console.error('Error accessing media devices', error);
+                });
+        }
 
         // Add an event listener to the capture button
         function capturePhoto() {
-            const videoElement = document.getElementById('videoElement');
             const canvas = document.getElementById('photo-preview');
             const dataInput = document.getElementById('photo-data');
             const capturedPhoto = document.getElementById('captured-photo');
@@ -97,8 +110,6 @@
             // Store the image data in the hidden input field
             dataInput.value = imageData;
 
-            // Show the canvas with the captured photo
-            //canvas.style.display = 'block';
             // Show the captured photo below the live video
             capturedPhoto.src = imageData;
             capturedPhoto.style.display = 'block';
