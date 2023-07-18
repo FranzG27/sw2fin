@@ -111,7 +111,10 @@
                                             value="{{ old('cellphone') }}">
                                     </div>
                                 </div>
-                                <center><a href="">SE DEBE USAR LA MISMA OPCION DE CAPTURAR O SUBIR FOTO PARA AMBAS FOTOS</a></center>
+                                <center><a href="">SE DEBE USAR LA MISMA OPCION DE CAPTURAR O SUBIR PARA AMBAS FOTOS</a></center>
+                                <br>
+                                <center><a href="">tener buena iluminacion en caso de usar la opcion de capturar</a></center>
+                                <br>
                                 <div class="row mb-3">
                                     <label for="inputPhoto1" class="col-sm-2 col-form-label">Foto de su rostro</label>
                                     <div class="col-sm-10">
@@ -119,7 +122,9 @@
                                         <input type="hidden" id="photo1-data" name="photo1_data">
                                         <canvas id="photo1-preview" style="display: none;"></canvas>
                                         <input type="file" accept="image/*" id="inputPhoto1" name="photo1" style="display: none;">
-                                        <button type="button" class="btn btn-primary" onclick="capturePhoto('inputPhoto1', 'photo1-data', 'photo1-preview')">Capturar</button>
+                                        <img id="photo1-selected" src="#" alt="Photo 1 Preview" style="display: none; max-width: 100%;">
+                                        <br>
+                                        <button type="button" class="btn btn-primary" onclick="capturePhoto('inputPhoto1', 'photo1-data', 'photo1-preview', 'photo1-selected')">Capturar</button>
                                         <button type="button" class="btn btn-primary" onclick="openFileInput('inputPhoto1')">Subir Foto</button>
                                     </div>
                                 </div>
@@ -131,7 +136,9 @@
                                         <input type="hidden" id="photo2-data" name="photo2_data">
                                         <canvas id="photo2-preview" style="display: none;"></canvas>
                                         <input type="file" accept="image/*" id="inputPhoto2" name="photo2" style="display: none;">
-                                        <button type="button" class="btn btn-primary" onclick="capturePhoto('inputPhoto2', 'photo2-data', 'photo2-preview')">Capturar</button>
+                                        <img id="photo2-selected" src="#" alt="Photo 2 Preview" style="display: none; max-width: 100%;">
+                                        <br>
+                                        <button type="button" class="btn btn-primary" onclick="capturePhoto('inputPhoto2', 'photo2-data', 'photo2-preview', 'photo2-selected')">Capturar</button>
                                         <button type="button" class="btn btn-primary" onclick="openFileInput('inputPhoto2')">Subir Foto</button>
                                     </div>
                                 </div>
@@ -183,13 +190,14 @@
             });
 
         // Add an event listener to the capture button
-        function capturePhoto(inputId, dataInputId, previewId) {
+        function capturePhoto(inputId, dataInputId, previewId, selectedId) {
             const videoElement = document.getElementById('videoElement');
             const videoElement2 = document.getElementById('videoElement2');
             const canvas = document.getElementById(previewId);
             const context = canvas.getContext('2d');
             const fileInput = document.getElementById(inputId);
             const dataInput = document.getElementById(dataInputId);
+            const photoSelected = document.getElementById(selectedId);
 
             if (inputId === 'inputPhoto1') {
                 context.drawImage(videoElement, 0, 0, canvas.width, canvas.height);
@@ -203,6 +211,8 @@
             dataInput.value = imageData;
 
             canvas.style.display = 'block';
+            photoSelected.src = imageData;
+            photoSelected.style.display = 'block';
         }
 
         function openFileInput(inputId) {
@@ -210,9 +220,10 @@
         }
 
         // Preview the selected file
-        function previewFile(inputId, previewId) {
+        function previewFile(inputId, previewId, selectedId) {
             const fileInput = document.getElementById(inputId);
             const preview = document.getElementById(previewId);
+            const photoSelected = document.getElementById(selectedId);
 
             const file = fileInput.files[0];
             const reader = new FileReader();
@@ -220,23 +231,27 @@
             reader.onloadend = function () {
                 preview.src = reader.result;
                 preview.style.display = 'block';
-            }
+                photoSelected.src = reader.result;
+                photoSelected.style.display = 'block';
+            };
 
             if (file) {
                 reader.readAsDataURL(file);
             } else {
                 preview.src = '#';
                 preview.style.display = 'none';
+                photoSelected.src = '#';
+                photoSelected.style.display = 'none';
             }
         }
 
         // Add event listeners to file inputs
         document.getElementById('inputPhoto1').addEventListener('change', function () {
-            previewFile('inputPhoto1', 'photo1-preview');
+            previewFile('inputPhoto1', 'photo1-preview', 'photo1-selected');
         });
 
         document.getElementById('inputPhoto2').addEventListener('change', function () {
-            previewFile('inputPhoto2', 'photo2-preview');
+            previewFile('inputPhoto2', 'photo2-preview', 'photo2-selected');
         });
     </script>
 </body>
