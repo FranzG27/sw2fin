@@ -52,7 +52,19 @@ class MedicalRecordController extends Controller
             $data['isAccepted']=false;
         }
         $data['id_donor']=$donador->id;
-        
+
+
+        // Create a new Form1 record
+        $form1Controller = new Form1Controller();
+        $form1 = $form1Controller->create($request);
+
+        // Create a new Form2 record
+        $form2Controller = new Form2Controller();
+        $form2 = $form2Controller->create($request);
+
+        // Create a new MedicalRecord record and assign the Form1 and Form2 IDs
+        $data['id_form1'] = $form1->id;
+        $data['id_form2'] = $form2->id;
          
         MedicalRecord::create($data);
         return redirect()->route('donors.fichas.index');

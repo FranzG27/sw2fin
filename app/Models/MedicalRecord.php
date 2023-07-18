@@ -13,6 +13,18 @@ class MedicalRecord extends Model
         'date',
         'isAccepted',
         'id_donor',
+        'id_form1',
+        'id_form2',
     ];
+
+    public function form1()
+    {
+        return $this->hasOne(Form1::class, 'id', 'id_form1');
+    }
+
+    public function form2()
+    {
+        return $this->hasOne(Form2::class, 'id', 'id_form2');
+    }
 
 }

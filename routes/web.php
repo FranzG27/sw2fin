@@ -111,5 +111,9 @@ Route::prefix('donors')->group(function(){
         Route::get('/fichaCrear',[MedicalRecordController::class,'crearFichaView'])->name('donors.fichaCrear.view');
         Route::post('/fichaCrear',[MedicalRecordController::class,'crearFicha'])->name('donors.fichaCrear');
 
+        //gestionar form2
+        Route::get('/form2/create', [Form2Controller::class, 'crearForm2View'])->name('donors.form2crear.view');
+        Route::post('/form2', [Form2Controller::class, 'crearForm2'])->name('donors.form2crear');
+
     });
 });
