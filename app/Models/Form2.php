@@ -46,6 +46,6 @@ class Form2 extends Model
         'transfusion',
         'vacuna',
         'vinchuca',
-        'id_donor',
+        
     ];
 }

@@ -10,6 +10,8 @@ use Illuminate\Http\Request;
 use App\Models\MedicalRecord;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Form1Controller;
+use App\Http\Controllers\Form2Controller;
 use App\Http\Requests\StoreMedicalRecordRequest;
 use App\Http\Requests\UpdateMedicalRecordRequest;
 

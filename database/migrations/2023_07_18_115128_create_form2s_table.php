@@ -51,7 +51,7 @@ return new class extends Migration
             $table->boolean('vinchuca');
             $table->unsignedBigInteger('id_donor');
 
-            $table->foreign('id_donor')->references('id')->on('donors')->onUpdate('cascade')->onDelete('cascade');
+            //$table->foreign('id_donor')->references('id')->on('donors')->onUpdate('cascade')->onDelete('cascade');
 
             $table->timestamps();
         });
