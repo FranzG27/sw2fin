@@ -245,7 +245,7 @@
             }
         }
 
-        // Add event listeners to file inputs
+        // Add event listeners to file inputsd
         document.getElementById('inputPhoto1').addEventListener('change', function () {
             previewFile('inputPhoto1', 'photo1-preview', 'photo1-selected');
         });
