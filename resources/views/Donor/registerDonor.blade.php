@@ -143,6 +143,13 @@
                                     </div>
                                 </div>
 
+                                <div class="form-check mb-3">
+                                    <input class="form-check-input" type="checkbox" value="1" id="acceptTerms" name="acceptTerms" required>
+                                    <label class="form-check-label" for="acceptTerms">
+                                        Acepto los <a href="{{url('/terms-and-conditions')}}">Términos y Condiciones</a>
+                                    </label>
+                                </div>
+
 
                                 <button type="submit" class="btn btn-primary">Crear Donante</button>
                             </form>

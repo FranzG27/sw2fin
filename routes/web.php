@@ -113,3 +113,7 @@ Route::prefix('donors')->group(function(){
 
     });
 });
+
+Route::get('/terms-and-conditions', function () {
+    return view('Donor.terms');
+})->name('terms.and.conditions');
