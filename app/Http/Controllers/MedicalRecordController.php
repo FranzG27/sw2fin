@@ -56,21 +56,177 @@ class MedicalRecordController extends Controller
         $data['id_donor']=$donador->id;
 
 
-        // Create a new Form1 record
-        $form1Controller = new Form1Controller();
-        $form1 = $form1Controller->create($request);
-
-        // Create a new Form2 record
-        $form2Controller = new Form2Controller();
-        $form2 = $form2Controller->create($request);
-
-        // Create a new MedicalRecord record and assign the Form1 and Form2 IDs
-        $data['id_form1'] = $form1->id;
-        $data['id_form2'] = $form2->id;
+        
          
         MedicalRecord::create($data);
         return redirect()->route('donors.fichas.index');
     }
+
+    public function editFichaView($id)
+    {
+        $medicalRecord = MedicalRecord::findOrFail($id);
+        $form1 = $medicalRecord->form1 ?? null;
+        $form2 = $medicalRecord->form2 ?? null;
+
+        return view('Donor.gestionarFichaMedica.edit', compact('medicalRecord', 'form1', 'form2'));
+    }
+
+    public function updateFicha(Request $request, $id)
+{
+    // $data = $request->validate([
+    //     // Validate the fields that are required for MedicalRecord
+    //     'date' => ['required'],
+    //     'isAccepted' => ['required'],
+
+    //     // Validate the fields that are required for Form1
+    //     'ci' => ['required'],
+    //     'departamento' => ['required'],
+    //     'domicilio' => ['required'],
+    //     'edad' => ['required'],
+    //     'email' => ['required'],
+    //     'estadoCivil' => ['required'],
+    //     'fecha' => ['required'],
+    //     'gradoInstruccion' => ['required'],
+    //     'hora' => ['required'],
+    //     'lugarTrabajo' => ['required'],
+    //     'fechaNacimiento' => ['required'],
+    //     'nombreCompleto' => ['required'],
+    //     'ocupacion' => ['required'],
+    //     'procendencia' => ['required'],
+    //     'profesion' => ['required'],
+    //     'sexo' => ['required'],
+    //     'telefono' => ['required'],
+    //     'telefonoEmergencia' => ['required'],
+    //     'tipoDonacion' => ['required'],
+    //     'zona' => ['required'],
+
+    //     // Validate the fields that are required for Form2
+    //     'alergia' => ['required'],
+    //     'bloodDisease' => ['required'],
+    //     'cambioPareja' => ['required'],
+    //     'carcel' => ['required'],
+    //     'chagas' => ['required'],
+    //     'chagasFamiliar' => ['required'],
+    //     'cold' => ['required'],
+    //     'contagioEnfermedad' => ['required'],
+    //     'convulsiones' => ['required'],
+    //     'dental' => ['required'],
+    //     'drogas' => ['required'],
+    //     'embarazo' => ['required'],
+    //     'estadoAnimo' => ['required'],
+    //     'ets' => ['required'],
+    //     'etsdisease' => ['nullable'], // Make etsdisease nullable (not required)
+    //     'fiebre' => ['required'],
+    //     'heartDisease' => ['required'],
+    //     'hepatitis' => ['required'],
+    //     'longTreatment' => ['required'],
+    //     'malaria' => ['required'],
+    //     'medicacion' => ['required'],
+    //     'motivo' => ['required'],
+    //     'motivoPrueba' => ['required'],
+    //     'nuevo' => ['required'],
+    //     'pulmon' => ['required'],
+    //     'rechazadoS' => ['required'],
+    //     'recentMedication' => ['required'],
+    //     'sida' => ['required'],
+    //     'sidaContagio' => ['required'],
+    //     'sidaPrueba' => ['required'],
+    //     'sifilis' => ['required'],
+    //     'tatuaje' => ['required'],
+    //     'tos' => ['required'],
+    //     'transfusion' => ['required'],
+    //     'vacuna' => ['required'],
+    //     'vinchuca' => ['required'],
+    // ]);
+
+    $data = $request->validate([
+        // Validate the fields that are required for MedicalRecord
+        'date' => ['nullable'],
+        'isAccepted' => ['nullable'],
+        
+    
+        // Validate the fields that are required for Form1
+        'ci' => ['nullable'],
+        'departamento' => ['nullable'],
+        'domicilio' => ['nullable'],
+        'edad' => ['nullable'],
+        'email' => ['nullable'],
+        'estadoCivil' => ['nullable'],
+        'fecha' => ['nullable'],
+        'gradoInstruccion' => ['nullable'],
+        //'hora' => ['nullable'],
+        'lugarTrabajo' => ['nullable'],
+        'fechaNacimiento' => ['nullable'],
+        'nombreCompleto' => ['nullable'],
+        'ocupacion' => ['nullable'],
+        'procendencia' => ['nullable'],
+        'profesion' => ['nullable'],
+        'sexo' => ['nullable'],
+        'telefono' => ['nullable'],
+        'telefonoEmergencia' => ['nullable'],
+        'tipoDonacion' => ['nullable'],
+        'zona' => ['nullable'],
+    
+        // Validate the fields that are required for Form2
+        'alergia' => ['nullable'],
+        'bloodDisease' => ['nullable'],
+        'cambioPareja' => ['nullable'],
+        'carcel' => ['nullable'],
+        'chagas' => ['nullable'],
+        'chagasFamiliar' => ['nullable'],
+        'cold' => ['nullable'],
+        'contagioEnfermedad' => ['nullable'],
+        'convulsiones' => ['nullable'],
+        'dental' => ['nullable'],
+        'drogas' => ['nullable'],
+        'embarazo' => ['nullable'],
+        'estadoAnimo' => ['nullable'],
+        'ets' => ['nullable'],
+        'etsdisease' => ['nullable'], // Make etsdisease nullable (not required)
+        'fiebre' => ['nullable'],
+        'heartDisease' => ['nullable'],
+        'hepatitis' => ['nullable'],
+        'longTreatment' => ['nullable'],
+        'malaria' => ['nullable'],
+        'medicacion' => ['nullable'],
+        'motivo' => ['nullable'],
+        'motivoPrueba' => ['nullable'],
+        'nuevo' => ['nullable'],
+        'pulmon' => ['nullable'],
+        'rechazadoS' => ['nullable'],
+        'recentMedication' => ['nullable'],
+        'sida' => ['nullable'],
+        'sidaContagio' => ['nullable'],
+        'sidaPrueba' => ['nullable'],
+        'sifilis' => ['nullable'],
+        'tatuaje' => ['nullable'],
+        'tos' => ['nullable'],
+        'transfusion' => ['nullable'],
+        'vacuna' => ['nullable'],
+        'vinchuca' => ['nullable'],
+    ]);
+
+    $medicalRecord = MedicalRecord::findOrFail($id);
+    $medicalRecord->update($data);
+
+    // Get the existing medical record
+    $medicalRecord = MedicalRecord::findOrFail($id);
+
+    // Set the 'id_donor' value from the authenticated user
+    $data['id_donor'] = Auth::user()->id;
+
+    // Update the medical record
+    $medicalRecord->update($data);
+
+    // Create or update Form1 and Form2 records
+    $medicalRecord->form1()->updateOrCreate(['id' => $medicalRecord->id], $data);
+    $medicalRecord->form2()->updateOrCreate(['id' => $medicalRecord->id], $data);
+
+
+    
+
+    return redirect()->route('donors.fichas.index')->with('success', 'Ficha médica actualizada exitosamente.');
+}
 
     //=========================================================
 }

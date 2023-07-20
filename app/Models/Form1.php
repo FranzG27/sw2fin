@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Form1 extends Model
 {
     use HasFactory;
+    //protected $primaryKey = 'form1_id'; 
 
     protected $fillable = [
         'ci',
@@ -18,7 +19,7 @@ class Form1 extends Model
         'estadoCivil',
         'fecha',
         'gradoInstruccion',
-        'hora',
+        //'hora',
         'id',
         'lugarTrabajo',
         'fechaNacimiento',
@@ -32,4 +33,34 @@ class Form1 extends Model
         'tipoDonacion',
         'zona'
     ];
+
+    // Make fields nullable
+    protected $casts = [
+        'ci' => 'string',
+        'departamento' => 'string',
+        'domicilio' => 'string',
+        'edad' => 'integer',
+        'email' => 'string',
+        'estadoCivil' => 'string',
+        'fecha' => 'date',
+        'gradoInstruccion' => 'string',
+        //'hora' => 'time',
+        'id' => 'integer',
+        'lugarTrabajo' => 'string',
+        'fechaNacimiento' => 'date',
+        'nombreCompleto' => 'string',
+        'ocupacion' => 'string',
+        'procendencia' => 'string',
+        'profesion' => 'string',
+        'sexo' => 'string',
+        'telefono' => 'string',
+        'telefonoEmergencia' => 'string',
+        'tipoDonacion' => 'string',
+        'zona' => 'string',
+    ];
+    
+    public function medicalRecord()
+    {
+        return $this->hasOne(MedicalRecord::class, 'form1_id');
+    }
 }

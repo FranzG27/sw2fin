@@ -19,12 +19,12 @@ class MedicalRecord extends Model
 
     public function form1()
     {
-        return $this->hasOne(Form1::class, 'id', 'id_form1');
+        return $this->belongsTo(Form1::class);
     }
 
     public function form2()
     {
-        return $this->hasOne(Form2::class, 'id', 'id_form2');
+        return $this->belongsTo(Form2::class);
     }
 
 }

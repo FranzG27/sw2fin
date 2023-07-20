@@ -16,13 +16,12 @@ return new class extends Migration
             $table->date('date');
             $table->boolean('isAccepted');
             $table->unsignedBigInteger('id_donor');
-            $table->unsignedBigInteger('id_form1');
-            $table->unsignedBigInteger('id_form2');
+            $table->unsignedBigInteger('form1_id')->nullable();
+            $table->unsignedBigInteger('form2_id')->nullable();
             
             $table->foreign('id_donor')->references('id')->on('donors')->onUpdate('cascade')->onDelete('cascade');
-            
-            $table->foreign('id_form1')->references('id')->on('form1s')->onUpdate('cascade')->onDelete('cascade');
-            $table->foreign('id_form2')->references('id')->on('form2s')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('form1_id')->references('id')->on('form1s')->onDelete('set null');
+            $table->foreign('form2_id')->references('id')->on('form2s')->onDelete('set null');
 
             $table->timestamps();
         });

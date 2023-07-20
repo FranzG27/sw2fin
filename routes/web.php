@@ -111,9 +111,13 @@ Route::prefix('donors')->group(function(){
         Route::get('/fichaCrear',[MedicalRecordController::class,'crearFichaView'])->name('donors.fichaCrear.view');
         Route::post('/fichaCrear',[MedicalRecordController::class,'crearFicha'])->name('donors.fichaCrear');
 
-        //gestionar form2
-        Route::get('/form2/create', [Form2Controller::class, 'crearForm2View'])->name('donors.form2crear.view');
-        Route::post('/form2', [Form2Controller::class, 'crearForm2'])->name('donors.form2crear');
 
+        
+        // Add route for showing the edit form
+        Route::get('/donors/fichas/{id}/edit', [MedicalRecordController::class, 'editFichaView'])->name('donors.fichas.edit');
+
+        // Add route for handling the form submission and updating the medical record
+        Route::patch('/donors/fichas/{id}', [MedicalRecordController::class, 'updateFicha'])->name('donors.fichaUpdate');
+        
     });
 });
